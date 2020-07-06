@@ -1,0 +1,7 @@
+syntax = "proto3";
+package pb;
+
+message UserInfo {
+  int32 user_id = 1; // 用户ID
+  int32 user_score = 2; // 用户积分
+}

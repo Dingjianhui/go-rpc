@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+
+import "UserModel.proto";
+
+message UserScoreRequest {
+  repeated UserInfo users = 1;
+}
+
+message UserScoreResponse {
+  repeated UserInfo users = 1;
+}
+
+// 需要支持Restful API 参考Product.proto
+service UserService {
+  // 客服端一次请求, 服务器一次应答
+  rpc GetUserScore(UserScoreRequest) returns (UserScoreResponse);
+
+  // 客服端一次请求, 服务器多次应答(流式)
+  rpc GetUserScoreByServerStream(UserScoreRequest) returns (stream UserScoreResponse);
+
+  // 客服端多次请求(流式), 服务器一次应答
+  rpc GetUserScoreByClientStream(stream UserScoreRequest) returns (UserScoreResponse);
+
+  // 客服端多次请求(流式), 服务器多次应答(流式)
+  rpc GetUserScoreByDoubleStream(stream UserScoreRequest) returns (stream UserScoreResponse);
+}

@@ -1,0 +1,33 @@
+// 验证 https://github.com/envoyproxy/protoc-gen-validate
+// 1. 安装 go get -u github.com/envoyproxy/protoc-gen-validate
+// 2. example:
+//             import "validate.proto";
+//             float order_price = 4 [(validate.rules).float.gt    = 1];
+// 3. 编译:  protoc --go_out=plugins=grpc:../pbfiles --validate_out=lang=go:../services OrderModel.proto
+
+syntax = "proto3";
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+//订单模型
+message OrdersModel {
+  int32 order_id = 1; // 订单ID
+  string order_no = 2; // 订单编号
+  int32 user_id = 3; // 购买者ID
+  float order_price = 4; // 订单价格
+  int32 order_status = 5;// 订单状态
+  google.protobuf.Timestamp order_time=6; // 订单时间
+  repeated OrderDetailsModel order_details = 7; // 订单详情
+}
+
+//子订单模型
+message OrderDetailsModel {
+  int32 detail_id = 1; // 子订单ID
+  string order_no = 2; // 订单编号
+  int32 prod_id = 3;  // 产品ID
+  float prod_price = 4; // 产品价格
+  int32 buy_num = 5; // 购买数量
+}
+
+

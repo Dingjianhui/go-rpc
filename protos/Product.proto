@@ -1,0 +1,38 @@
+syntax = "proto3";
+package pb;
+
+import "google/api/annotations.proto";
+import "ProductModel.proto"; // 导入商品模型proto(外部proto)
+
+// 商品详情请求参数
+message ProductDetailRequest {
+  int32 prod_id = 1; // 请求参数-商品ID
+}
+
+// 商品列表请求参数
+message ProductListRequest {
+  int32 page = 1; // 页码
+  int32 page_size = 2; // 页码条数
+}
+
+// 响应商品列表
+message ProductListResponse {
+  repeated ProductsModel prod_list = 1;
+}
+
+// rpc商品服务
+service ProductService {
+  // 获取商品详情
+  rpc GetProductDetail(ProductDetailRequest) returns (ProductsModel) {
+    // 通过grpc_gateway工具构建Restful Api服务
+    option (google.api.http) = {
+      get: "/v1/product/{prod_id}"
+    };
+  };
+  // 获取商品列表
+  rpc GetProductList(ProductListRequest) returns (ProductListResponse) {
+    option (google.api.http) = {
+      get: "/v1/products"
+    };
+  };
+}

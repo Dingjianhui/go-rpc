@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+
+import "google/api/annotations.proto";
+import "OrderModel.proto";
+
+// 请求
+message OrderRequest {
+  OrdersModel order_main = 1;
+}
+
+// 响应
+message OrderResponse {
+  int32 code = 1;
+  string msg = 2;
+}
+
+// rpc服务
+service OrderService {
+  // 下订单
+  rpc CreateOrder(OrderRequest) returns (OrderResponse) {
+    option (google.api.http) = {
+      post: "/v1/order/create"
+      body:"order_main"
+    };
+  };
+}

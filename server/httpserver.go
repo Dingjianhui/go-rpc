@@ -4,16 +4,19 @@ import (
 	"context"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"google.golang.org/grpc"
+	pb "grpc/pbfiles"
 	"grpc/server/helper"
-	"grpc/server/services"
 	"log"
 	"net/http"
 )
 
 func main()  {
-	mux := runtime.NewServeMux()
-	opt := []grpc.DialOption{grpc.WithTransportCredentials(helper.GetClientCreds())}
-	err := services.RegisterProdServiceHandlerFromEndpoint(context.Background(),
+	mux := runtime.NewServeMux() // 初始化路由
+
+	opt := []grpc.DialOption{grpc.WithTransportCredentials(helper.GetClientCreds())} // 使用证书连接
+
+	//---------------注册产品服务--------------------//
+	err := pb.RegisterProductServiceHandlerFromEndpoint(context.Background(),
 		mux,
 		"localhost:8081",
 		opt,
@@ -22,6 +25,23 @@ func main()  {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+	//---------------注册产品服务--------------------//
+
+
+
+	//---------------注册订单服务--------------------//
+	err = pb.RegisterOrderServiceHandlerFromEndpoint(context.Background(),
+		mux,
+		"localhost:8081",
+		opt,
+		)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	//---------------注册订单服务--------------------//
+
+
+
 
 	httpServer := &http.Server{
 		Addr:              ":8080",
