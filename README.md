@@ -8,8 +8,11 @@ go-grpc场景练习-模拟创建订单服务、产品列表服务、产品详情
 BACKGROUND
 -------------
 生成服务端与客户端代码
+
 [Product.proto](protos/Product.proto).
+
 [Order.proto](protos/Order.proto).
+
 [User.proto](protos/User.proto).
 
 PREREQUISITES
@@ -40,6 +43,12 @@ TRY IT!
 
   ```
   $ go run server/server.go
+  ```
+  
+- Run the httpserver(RestFul Api)
+
+  ```
+  $ go run server/httpserver.go
   ```
 
 - Run the client

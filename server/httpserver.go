@@ -1,3 +1,8 @@
+// Copyright © 2020 JianHui Ding
+// go-grpc 场景练习
+// github: https://github.com/Dingjianhui/go-rpc
+// gitee:  https://gitee.com/dingjianhui/go-grpc
+
 package main
 
 import (
